@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  ## local stuff:
+  protect_from_forgery with: :null_session
 
   # GET /users
   # GET /users.json
@@ -54,6 +56,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def import
+    User.import(params[:file])
   end
 
   # DELETE /users/1
